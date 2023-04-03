@@ -7,8 +7,10 @@ const app = express();
 app.use(cors());
 app.use(morgan('short'));
 app.use(express.json());
+require('dotenv').config();
 
 const knex = require('knex')(require('./knexfile.js')[process.env.NODE_ENV||'development']);
+const api_key = process.env.API_KEY
 
 app.get('/movies',function(req,res){
   knex
@@ -19,6 +21,13 @@ app.get('/movies',function(req,res){
       message:
         'The data you are looking for could not be found. Please try again'
     }))
+})
+
+app.get('/search/movies',function(req,res){
+  let search = req.query.search
+  fetch(`https://api.themoviedb.org/3/search/movie?api_key=${api_key}&query=${search}&language=en-US&page=1&include_adult=false`)
+    .then(res=>res.json())
+    .then(data=>res.status(200).json(data))
 })
 
 app.patch('/movies/:id', function(req, res){
