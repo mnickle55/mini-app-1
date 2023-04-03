@@ -10,6 +10,7 @@ const Home = () => {
   const [filter,setFilter] = useState({"query":null,"watched":null})
   const [trigger,setTrigger] = useState(0)
   const searchRef = useRef(null);
+  const [selectedMovie,setSelectedMovie] = useState(null)
 
   const handleSearch = () => {
     let query = searchRef.current.firstElementChild.value;
@@ -70,7 +71,7 @@ const Home = () => {
           <AddMovies trigger={trigger} setTrigger={setTrigger}/>
         </Col>
       </Row>
-      {movieData && <MovieList movieData={movieData} filter={filter} setFilter={setFilter} trigger={trigger} setTrigger={setTrigger}/>}
+      {movieData && <MovieList movieData={movieData} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} filter={filter} setFilter={setFilter} trigger={trigger} setTrigger={setTrigger}/>}
       
       
     </Container>

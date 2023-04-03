@@ -36,7 +36,7 @@ const AddMovies = ({trigger,setTrigger}) => {
   }
 
   return ( 
-    <Row>
+    <Row className = 'py-2'>
         <Form className="d-flex" ref={inputRef} onKeyDown={(e) => handleKeyDown(e)} >
           <Form.Control
             type="search"
