@@ -84,7 +84,7 @@ const Home = () => {
           </Form>
         </Col>
         <Col>
-          <AddMovies trigger={trigger} setTrigger={setTrigger} handleAPISearch={handleAPISearch} recommendations={recommendations}/>
+          <AddMovies trigger={trigger} setTrigger={setTrigger} handleAPISearch={handleAPISearch} recommendations={recommendations} setRecommendations={setRecommendations}/>
         </Col>
       </Row>
       {movieData && <MovieList movieData={movieData} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} filter={filter} setFilter={setFilter} trigger={trigger} setTrigger={setTrigger}/>}

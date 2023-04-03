@@ -1,7 +1,7 @@
 import { Form, Button, Row, Container, ListGroup } from "react-bootstrap";
 import { useRef } from "react";
 
-const AddMovies = ({trigger,setTrigger,handleAPISearch,recommendations}) => {
+const AddMovies = ({trigger,setTrigger,handleAPISearch,recommendations,setRecommendations}) => {
 
   const inputRef = useRef(null);
 
@@ -22,6 +22,7 @@ const AddMovies = ({trigger,setTrigger,handleAPISearch,recommendations}) => {
       .then(res=> {
         let newCount = trigger+1;
         setTrigger(newCount)
+        setRecommendations(null)
         return res}
         )
       .catch(err=>console.log(err))
