@@ -1,7 +1,7 @@
-import { Form, Button, Row } from "react-bootstrap";
+import { Form, Button, Row, Container, ListGroup } from "react-bootstrap";
 import { useRef } from "react";
 
-const AddMovies = ({trigger,setTrigger}) => {
+const AddMovies = ({trigger,setTrigger,handleAPISearch,recommendations}) => {
 
   const inputRef = useRef(null);
 
@@ -35,18 +35,35 @@ const AddMovies = ({trigger,setTrigger}) => {
     }
   }
 
+  const handleClick = (title) => {
+    inputRef.current.firstElementChild.value = title
+  }
+
   return ( 
-    <Row className = 'py-2'>
-        <Form className="d-flex" ref={inputRef} onKeyDown={(e) => handleKeyDown(e)} >
-          <Form.Control
-            type="search"
-            placeholder="Add Movie"
-            className="me-2"
-            aria-label="Search"
-          />
-          <Button variant="success" onClick={(e) => handlePost(e)}>Add Movie</Button>
-        </Form>
-    </Row>
+    <Container>
+      <Row className = 'py-2'>
+          <Form className="d-flex" ref={inputRef} onKeyUp={(e)=>{handleAPISearch(inputRef.current.firstElementChild.value)}} onKeyDown={(e) => handleKeyDown(e)} >
+            <Form.Control
+              type="search"
+              placeholder="Add Movie"
+              className="me-2"
+              aria-label="Search"
+            />
+            <Button variant="success" onClick={(e) => handlePost(e)}>Add Movie</Button>
+            
+          </Form>
+      </Row>
+      <Row>
+        {recommendations && 
+              <ListGroup>
+              { recommendations.map(movie => 
+                <ListGroup.Item key={movie.id} onClick={()=>handleClick(movie.original_title)}>
+                  {movie.original_title}
+                </ListGroup.Item> )}
+              </ListGroup>
+            }
+      </Row>
+    </Container>
    );
 }
  

@@ -11,6 +11,7 @@ const Home = () => {
   const [trigger,setTrigger] = useState(0)
   const searchRef = useRef(null);
   const [selectedMovie,setSelectedMovie] = useState(null)
+  const [recommendations,setRecommendations] = useState(null)
 
   const handleSearch = () => {
     let query = searchRef.current.firstElementChild.value;
@@ -18,6 +19,19 @@ const Home = () => {
       ...filter,
       query: query,
     })
+  }
+
+  const handleAPISearch = (query) => {
+    fetch(`http://localhost:5000/search/movies?search=${query}`)
+        .then(res => res.json())
+        .then(data => {
+          setRecommendations(data.results.slice(0,5))
+          })
+        .catch(error => {
+            if (error.name !== 'AbortError') {
+                console.error(error.message)
+            }
+        })
   }
 
   const handleKeyDown = (e) => {
@@ -68,11 +82,12 @@ const Home = () => {
             />
             <Button variant="outline-dark" onClick={()=>handleSearch()}>Search</Button>
           </Form>
-          <AddMovies trigger={trigger} setTrigger={setTrigger}/>
+        </Col>
+        <Col>
+          <AddMovies trigger={trigger} setTrigger={setTrigger} handleAPISearch={handleAPISearch} recommendations={recommendations}/>
         </Col>
       </Row>
       {movieData && <MovieList movieData={movieData} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} filter={filter} setFilter={setFilter} trigger={trigger} setTrigger={setTrigger}/>}
-      
       
     </Container>
   );
